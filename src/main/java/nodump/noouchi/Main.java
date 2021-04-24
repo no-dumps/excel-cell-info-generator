@@ -9,7 +9,11 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Start.");
         try {
-            CellInfoGenerator.GenerateExcelInfo("resource/test/test.xlsx");
+            if (args.length == 0) {
+                System.out.println("エクセルファイルパスを指定してください。");
+                return;
+            }
+            CellInfoGenerator.GenerateExcelInfo(args[0]);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

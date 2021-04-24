@@ -11,9 +11,6 @@ public class ExcelBook {
     private XSSFWorkbook workbook;
 
     public ExcelBook(String path) {
-        if (path == null) {
-            throw new IllegalArgumentException("エクセルファイルのパスが不正");
-        }
         try {
             workbook = new XSSFWorkbook(new FileInputStream(path));
         } catch (Exception e) {

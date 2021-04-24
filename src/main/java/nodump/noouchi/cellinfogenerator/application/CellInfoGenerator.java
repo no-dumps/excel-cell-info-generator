@@ -13,8 +13,8 @@ import java.util.List;
 
 public class CellInfoGenerator {
     public static void GenerateExcelInfo(String path) throws IOException {
-        System.out.println("Loading WorkBook：" + path + " .");
         ExcelBook excelBook = new ExcelBook(path);
+        System.out.println("Loading WorkBook：" + path + " .");
         List<String> sheetNames = excelBook.getSheetNames();
         ArrayList<ExcelInfo> result = new ArrayList<>();
         XSSFWorkbook workbook = excelBook.getWorkbook();
