@@ -1,7 +1,9 @@
 package nodump.noouchi.cellinfogenerator.domain.excel;
 
+import org.apache.poi.ss.formula.WorkbookEvaluator;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 
 import java.util.Arrays;
@@ -32,25 +34,26 @@ public class ExcelCellInfo {
     public ExcelCellInfo(XSSFCell cell) {
         cellRange = cell.getReference();
         value = getCellValueToString(cell);
-        alignment = cell.getCellStyle().getAlignment().name();
-        borderBottom = cell.getCellStyle().getBorderBottom().name();
-        borderLeft = cell.getCellStyle().getBorderLeft().name();
-        borderRight = cell.getCellStyle().getBorderRight().name();
-        borderTop = cell.getCellStyle().getBorderTop().name();
-        bottomBorderColor = String.valueOf(cell.getCellStyle().getBottomBorderColor());
-        leftBorderColor = String.valueOf(cell.getCellStyle().getLeftBorderColor());
-        rightBorderColor = String.valueOf(cell.getCellStyle().getRightBorderColor());
-        topBorderColor = String.valueOf(cell.getCellStyle().getTopBorderColor());
-        dataFormat = cell.getCellStyle().getDataFormatString();
-        fillBackgroundColor = cell.getCellStyle().getFillBackgroundColorColor() == null ? null : Arrays.toString(cell.getCellStyle().getFillBackgroundColorColor().getRGB());
-        fillForegroundColor = cell.getCellStyle().getFillForegroundColorColor() == null ? null : Arrays.toString(cell.getCellStyle().getFillForegroundColorColor().getRGB());
-        fillPattern = cell.getCellStyle().getFillPattern().name();
-        font = new Font(cell.getCellStyle().getFont());
-        hidden = String.valueOf(cell.getCellStyle().getHidden());
-        indention = String.valueOf(cell.getCellStyle().getIndention());
-        locked = String.valueOf(cell.getCellStyle().getLocked());
-        rotation = String.valueOf(cell.getCellStyle().getRotation());
-        verticalAlignment = cell.getCellStyle().getVerticalAlignment().name();
+        XSSFCellStyle cellStyle = cell.getCellStyle();
+        alignment = cellStyle.getAlignment().name();
+        borderBottom = cellStyle.getBorderBottom().name();
+        borderLeft = cellStyle.getBorderLeft().name();
+        borderRight = cellStyle.getBorderRight().name();
+        borderTop = cellStyle.getBorderTop().name();
+        bottomBorderColor = String.valueOf(cellStyle.getBottomBorderColor());
+        leftBorderColor = String.valueOf(cellStyle.getLeftBorderColor());
+        rightBorderColor = String.valueOf(cellStyle.getRightBorderColor());
+        topBorderColor = String.valueOf(cellStyle.getTopBorderColor());
+        dataFormat = cellStyle.getDataFormatString();
+        fillBackgroundColor = cellStyle.getFillBackgroundColorColor() == null ? null : Arrays.toString(cellStyle.getFillBackgroundColorColor().getRGB());
+        fillForegroundColor = cellStyle.getFillForegroundColorColor() == null ? null : Arrays.toString(cellStyle.getFillForegroundColorColor().getRGB());
+        fillPattern = cellStyle.getFillPattern().name();
+        font = new Font(cellStyle.getFont());
+        hidden = String.valueOf(cellStyle.getHidden());
+        indention = String.valueOf(cellStyle.getIndention());
+        locked = String.valueOf(cellStyle.getLocked());
+        rotation = String.valueOf(cellStyle.getRotation());
+        verticalAlignment = cellStyle.getVerticalAlignment().name();
     }
 
     private static String getCellValueToString(XSSFCell cell) {
@@ -66,6 +69,11 @@ public class ExcelCellInfo {
             case BOOLEAN:
                 return String.valueOf(cell.getBooleanCellValue());
             case FORMULA:
+                // FIXME Want to improve the accuracy of detecting formulas that are not supported by POI.
+                Object[] notSupportedFormula = WorkbookEvaluator.getNotSupportedFunctionNames().stream().filter(cell.getCellFormula()::contains).toArray();
+                if (notSupportedFormula.length == 0) {
+                    return String.valueOf(cell.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator().evaluateInCell(cell));
+                }
                 return String.valueOf(cell.getCellFormula());
             case ERROR:
                 return String.valueOf(cell.getErrorCellValue());
