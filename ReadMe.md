@@ -1,10 +1,10 @@
 # ExcelCellInfoGenerator
 
-## Description
+## 📦Description
 
 This project is a Maven project that writes cell information from an Excel file to a Json file.
 
-## Sample of the output Json file
+## 🗒Sample of the output Json file
 
 <details>
   <summary>Check the contents of the sample file.</summary>
@@ -161,7 +161,7 @@ This project is a Maven project that writes cell information from an Excel file 
 
 </details>
 
-## Usage
+## 💬Usage
 
 ### Clone the Git project
 
@@ -201,7 +201,7 @@ mvnw exec:java -DexcelPath=<Excel file path>
 
 - [MIT](https://raw.githubusercontent.com/no-dumps/excel-cell-info-generator/main/LICENSE)
 
-## Author
+## 👀Author
 
 - [GitHub](https://github.com/NaokiOouchi)
 - [Twitter](https://twitter.com/NaoNoaNaoNoaN)
