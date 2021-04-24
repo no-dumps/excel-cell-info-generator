@@ -1,15 +1,19 @@
 package nodump.noouchi;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import nodump.noouchi.cellinfogenerator.application.CellInfoGenerator;
+
+import java.io.IOException;
 
 public class Main {
 
     public static void main(String[] args) {
+        System.out.println("Start.");
         try {
             CellInfoGenerator.GenerateExcelInfo("resource/test/test.xlsx");
-        } catch (JsonProcessingException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            System.out.println("End.");
         }
     }
 }
