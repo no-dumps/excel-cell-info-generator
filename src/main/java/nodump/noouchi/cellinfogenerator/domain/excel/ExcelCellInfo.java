@@ -1,4 +1,4 @@
-package nodump.noouchi.cellinfogenerator.domain;
+package nodump.noouchi.cellinfogenerator.domain.excel;
 
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
