@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ExcelSheetService {
-    public static String getAllCellInfo(XSSFSheet sheet) throws JsonProcessingException {
+    public static ArrayList<ExcelCellInfo> getAllCellInfo(XSSFSheet sheet) {
         ArrayList<ExcelCellInfo> excelCellInfoList = new ArrayList<>();
 
         Iterator<Row> rowIterator = sheet.rowIterator();
@@ -25,8 +25,6 @@ public class ExcelSheetService {
                 excelCellInfoList.add(excelCellInfo);
             }
         }
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(excelCellInfoList);
-        return json;
+        return excelCellInfoList;
     }
 }

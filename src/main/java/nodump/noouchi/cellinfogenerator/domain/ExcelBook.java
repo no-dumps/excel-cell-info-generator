@@ -3,8 +3,9 @@ package nodump.noouchi.cellinfogenerator.domain;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ExcelBook {
     private XSSFWorkbook workbook;
@@ -21,11 +22,7 @@ public class ExcelBook {
     }
 
     public List<String> getSheetNames() {
-        List<String> sheetNames = new ArrayList<>();
-        for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
-            sheetNames.add(workbook.getSheetName(i));
-        }
-        return sheetNames;
+        return IntStream.range(0, workbook.getNumberOfSheets()).mapToObj(i -> workbook.getSheetName(i)).collect(Collectors.toList());
     }
 
     public XSSFWorkbook getWorkbook() {

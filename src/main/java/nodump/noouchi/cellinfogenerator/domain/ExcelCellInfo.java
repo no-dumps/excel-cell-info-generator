@@ -42,8 +42,8 @@ public class ExcelCellInfo {
         rightBorderColor = String.valueOf(cell.getCellStyle().getRightBorderColor());
         topBorderColor = String.valueOf(cell.getCellStyle().getTopBorderColor());
         dataFormat = cell.getCellStyle().getDataFormatString();
-        fillBackgroundColor = String.valueOf(cell.getCellStyle().getFillBackgroundColorColor());
-        fillForegroundColor = String.valueOf(cell.getCellStyle().getFillForegroundColorColor());
+        fillBackgroundColor = cell.getCellStyle().getFillBackgroundColorColor() == null ? null : Arrays.toString(cell.getCellStyle().getFillBackgroundColorColor().getRGB());
+        fillForegroundColor = cell.getCellStyle().getFillForegroundColorColor() == null ? null : Arrays.toString(cell.getCellStyle().getFillForegroundColorColor().getRGB());
         fillPattern = cell.getCellStyle().getFillPattern().name();
         font = new Font(cell.getCellStyle().getFont());
         hidden = String.valueOf(cell.getCellStyle().getHidden());
